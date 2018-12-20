@@ -73,16 +73,17 @@ namespace playerOne{
                     }
                 }
 
-                ///count diff_domain
+                ///count can_domain
                 for(int i=0;i<5;i++){
                     if(i==1||i==3) continue;
                     for(int j=0;j<6;j++){
                         if(i==1||i==4) continue;
+                        bool color_flag = (color[i][j]==White)? 1 : 0;
                         bool ex_u = (i!=0)? (Record[i-1][j]==0) : 1;
                         bool ex_d = (i!=4)? (Record[i+1][j]==0) : 1;
                         bool ex_l = (j!=0)? (Record[i][j-1]==0) : 1;
                         bool ex_r = (j!=5)? (Record[i][j+1]==0) : 1;
-                        if(ex_u&&ex_d&&ex_r&&ex_l){
+                        if(ex_u&&ex_d&&ex_r&&ex_l&&color_flag){
                             can_domain.push_back({Max[i][j], {i, j}});
                         }
                     }
@@ -90,10 +91,11 @@ namespace playerOne{
                 for(int i=0;i<5;i++){
                     for(int j=0;j<6;j++){
                         if(attack_area[i][j]==1){
-                            if(i!=0&&j!=0) can_domain.push_back({Max[i-1][j-1], {i-1, j-1}});
-                            if(i!=0&&j!=5) can_domain.push_back({Max[i-1][j+1], {i-1, j+1}});
-                            if(i!=4&&j!=0) can_domain.push_back({Max[i+1][j-1], {i+1, j-1}});
-                            if(i!=4&&j!=5) can_domain.push_back({Max[i+1][j+1], {i+1, j+1}});
+                            bool color_flag = (color[i][j]==inputColor||color[i][j]==White)?1:0;
+                            if(i!=0&&j!=0&&color_flag) can_domain.push_back({Max[i-1][j-1], {i-1, j-1}});
+                            if(i!=0&&j!=5&&color_flag) can_domain.push_back({Max[i-1][j+1], {i-1, j+1}});
+                            if(i!=4&&j!=0&&color_flag) can_domain.push_back({Max[i+1][j-1], {i+1, j-1}});
+                            if(i!=4&&j!=5&&color_flag) can_domain.push_back({Max[i+1][j+1], {i+1, j+1}});
                         }
                     }
                 }
@@ -217,16 +219,17 @@ namespace playerTwo{
                     }
                 }
 
-                ///count diff_domain
+                ///count can_domain
                 for(int i=0;i<5;i++){
                     if(i==1||i==3) continue;
                     for(int j=0;j<6;j++){
                         if(i==1||i==4) continue;
+                        bool color_flag = (color[i][j]==White)? 1 : 0;
                         bool ex_u = (i!=0)? (Record[i-1][j]==0) : 1;
                         bool ex_d = (i!=4)? (Record[i+1][j]==0) : 1;
                         bool ex_l = (j!=0)? (Record[i][j-1]==0) : 1;
                         bool ex_r = (j!=5)? (Record[i][j+1]==0) : 1;
-                        if(ex_u&&ex_d&&ex_r&&ex_l){
+                        if(ex_u&&ex_d&&ex_r&&ex_l&&color_flag){
                             can_domain.push_back({Max[i][j], {i, j}});
                         }
                     }
@@ -234,10 +237,11 @@ namespace playerTwo{
                 for(int i=0;i<5;i++){
                     for(int j=0;j<6;j++){
                         if(attack_area[i][j]==1){
-                            if(i!=0&&j!=0) can_domain.push_back({Max[i-1][j-1], {i-1, j-1}});
-                            if(i!=0&&j!=5) can_domain.push_back({Max[i-1][j+1], {i-1, j+1}});
-                            if(i!=4&&j!=0) can_domain.push_back({Max[i+1][j-1], {i+1, j-1}});
-                            if(i!=4&&j!=5) can_domain.push_back({Max[i+1][j+1], {i+1, j+1}});
+                            bool color_flag = (color[i][j]==inputColor||color[i][j]==White)?1:0;
+                            if(i!=0&&j!=0&&color_flag) can_domain.push_back({Max[i-1][j-1], {i-1, j-1}});
+                            if(i!=0&&j!=5&&color_flag) can_domain.push_back({Max[i-1][j+1], {i-1, j+1}});
+                            if(i!=4&&j!=0&&color_flag) can_domain.push_back({Max[i+1][j-1], {i+1, j-1}});
+                            if(i!=4&&j!=5&&color_flag) can_domain.push_back({Max[i+1][j+1], {i+1, j+1}});
                         }
                     }
                 }
@@ -293,4 +297,4 @@ namespace playerTwo{
             }
     };
 };
-#endif //_STUDENT_
+#endif //
