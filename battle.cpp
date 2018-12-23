@@ -10,8 +10,9 @@ namespace playerTwo{
 }
 
 bool renew(int Record[5][6], int Max[5][6], Color color[5][6], Color playerColor, int x, int y){
+    Color enemyColor = (playerColor == Blue)? Red : Blue;
     ///error detect.
-    if(color[x][y]!=playerColor&&color[x][y]!=White) return false;
+    if(color[x][y]==enemyColor||color[x][y]==Black||Record[x][y]>=Max[x][y]) return false;
     if(x<0||y<0||x>4||y>5) return false;
 
     ///placement
@@ -36,9 +37,10 @@ bool renew(int Record[5][6], int Max[5][6], Color color[5][6], Color playerColor
         int j = position.second;
         if(i==-1||j==-1||i==5||j==6) continue;
 
-        color[i][j] = playerColor;
-        Record[i][j]++;
-        if(Record[i][j]==Max[i][j]){
+        if(color[i][j]!=Black)color[i][j] = playerColor;
+        if(color[i][j]!=Black)Record[i][j]++;
+
+        if(Record[i][j]==Max[i][j]&&color[i][j]!=Black){
             color[i][j]=Black;
             chain_reaction.push({i-1, j});//UP
             chain_reaction.push({i+1, j});//DOWN
@@ -107,6 +109,7 @@ int main(void){
     bool flag1=0, flag2=0;
     bool ex;
     int x, y;
+    //int times=100;
     while(1){
         //s1 input
         s1.makeMove(Record, Max, color, color1);
@@ -131,6 +134,7 @@ int main(void){
         //final
         flag2 = final_step(Record, Max, color, color2);
         if(flag2) break;
+        print(Record, color);
     }
 
     if(flag1) std::cout<<"player1 wins.";
