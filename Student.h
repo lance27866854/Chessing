@@ -7,11 +7,13 @@ enum Color{
     Red, // Player Two
     Black //Explosion
 };
-
+int PY1=0;
+int PY2=0;
 namespace playerOne{
-    #define FAIL 444
-    #define DEFAULT_X 0
-    #define DEFAULT_Y 0
+
+    int FAIL=444;
+    int DEFAULT_X=0;
+    int DEFAULT_Y=0;
 
     typedef std::pair<int, int> Pair;
     typedef std::pair<int, Pair> t_Pair;
@@ -27,6 +29,7 @@ namespace playerOne{
 
                 analyst(Record, Max, color, inputColor, can_domain, can_kill, can_place);
                 decision_maker(can_domain, can_kill, can_place);
+                PY1++;
             }
             int getX(){return x;}
             int getY(){return y;}
@@ -88,7 +91,7 @@ namespace playerOne{
                         }
                     }
                 }
-                for(int i=0;i<5;i++){
+                /*for(int i=0;i<5;i++){
                     for(int j=0;j<6;j++){
                         if(attack_area[i][j]==1){
                             bool color_flag = (color[i][j]==inputColor||color[i][j]==White)?1:0;
@@ -98,7 +101,7 @@ namespace playerOne{
                             if(i!=4&&j!=5&&color_flag) can_domain.push_back({Max[i+1][j+1], {i+1, j+1}});
                         }
                     }
-                }
+                }*/
 
                 ///count can_kill
                 for(int i=0;i<5;i++){
@@ -155,9 +158,9 @@ namespace playerOne{
 ///------------------------------------------------------------------------
 
 namespace playerTwo{
-    #define FAIL 444
-    #define DEFAULT_X 0
-    #define DEFAULT_Y 0
+    int FAIL=444;
+    int DEFAULT_X=0;
+    int DEFAULT_Y=0;
 
     typedef std::pair<int, int> Pair;
     typedef std::pair<int, Pair> t_Pair;
@@ -173,6 +176,7 @@ namespace playerTwo{
 
                 analyst(Record, Max, color, inputColor, can_domain, can_kill, can_place);
                 decision_maker(can_domain, can_kill, can_place);
+                PY2++;
             }
             int getX(){return x;}
             int getY(){return y;}
@@ -231,17 +235,6 @@ namespace playerTwo{
                         bool ex_r = (j!=5)? (Record[i][j+1]==0) : 1;
                         if(ex_u&&ex_d&&ex_r&&ex_l&&color_flag){
                             can_domain.push_back({Max[i][j], {i, j}});
-                        }
-                    }
-                }
-                for(int i=0;i<5;i++){
-                    for(int j=0;j<6;j++){
-                        if(attack_area[i][j]==1){
-                            bool color_flag = (color[i][j]==inputColor||color[i][j]==White)?1:0;
-                            if(i!=0&&j!=0&&color_flag) can_domain.push_back({Max[i-1][j-1], {i-1, j-1}});
-                            if(i!=0&&j!=5&&color_flag) can_domain.push_back({Max[i-1][j+1], {i-1, j+1}});
-                            if(i!=4&&j!=0&&color_flag) can_domain.push_back({Max[i+1][j-1], {i+1, j-1}});
-                            if(i!=4&&j!=5&&color_flag) can_domain.push_back({Max[i+1][j+1], {i+1, j+1}});
                         }
                     }
                 }
